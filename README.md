@@ -1,4 +1,5 @@
 TikTok Live Stream Automator
+￼ ￼
 Overview
 This project is an automated Python script designed to monitor TikTok live streams from a specific user (@Official_Allmoney_04), record the streams when they go live, transcribe the audio to text, scan for predefined keywords, and store all outputs (video, transcription, and keyword analysis) in a Google Drive folder. The script runs continuously in a loop, polling for live status and handling the entire workflow end-to-end.
 Key features include:
@@ -22,7 +23,7 @@ Requirements
 	•	A Google Cloud service account with Drive API access (for uploads).
 	•	Access to a machine/VM where the script can run continuously (e.g., Oracle Cloud Free Tier VM as described in setup guides).
 Installation
-	1	Clone the Repository (or create files manually): git clone 
+	1	Clone the Repository: git clone https://github.com/yourusername/tiktok-live-automator.git
 	2	cd tiktok-live-automator
 	3	
 	4	Install System Dependencies:
@@ -64,7 +65,19 @@ Usage
 	◦	source venv/bin/activate
 	◦	python tiktok_automator.py
 	◦	 Detach with Ctrl+B, D; reattach with tmux attach -t automator.
-	◦	As a systemd service (on Linux): Create /etc/systemd/system/tiktok.service with the content provided in the setup guide, then: sudo systemctl daemon-reload
+	◦	As a systemd service (on Linux): Create /etc/systemd/system/tiktok.service with the following content: [Unit]
+	◦	Description=TikTok Automator Service
+	◦	After=network.target
+	◦	
+	◦	[Service]
+	◦	User=ubuntu
+	◦	WorkingDirectory=/home/ubuntu/tiktok_automator
+	◦	ExecStart=/home/ubuntu/venv/bin/python tiktok_automator.py
+	◦	Restart=always
+	◦	
+	◦	[Install]
+	◦	WantedBy=multi-user.target
+	◦	 Then: sudo systemctl daemon-reload
 	◦	sudo systemctl start tiktok.service
 	◦	sudo systemctl enable tiktok.service
 	◦	
@@ -89,20 +102,7 @@ Troubleshooting
 Contributing
 Feel free to fork and submit pull requests for improvements, such as adding email notifications or multi-user support.
 License
-This project is licensed under the MIT License. See LICENSE file for details (create one if needed).
+This project is licensed under the MIT License - see the LICENSE file for details.
 Acknowledgments
 	•	Built with open-source tools: TikTokLive, Streamlink, Whisper, Google API Client.
 	•	Inspired by needs for content archiving and analysis.
-
-requirements.txt
-TikTokLive
-streamlink
-whisper-timestamped
-python-docx
-pandas
-google-api-python-client
-google-auth
-google-auth-oauthlib
-torch
-torchaudio
-
